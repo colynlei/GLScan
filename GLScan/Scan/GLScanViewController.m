@@ -7,8 +7,11 @@
 //
 
 #import "GLScanViewController.h"
+#import "GLScanCapture.h"
 
 @interface GLScanViewController ()
+
+@property (nonatomic, strong) GLScanCapture *capture;
 
 @end
 
@@ -19,6 +22,9 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = UIColor.whiteColor;
+    
+    self.capture = [[GLScanCapture alloc] initWithScanShowView:self.view];
+    [self.capture startRunning];
 }
 
 /*
@@ -30,5 +36,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)dealloc {
+    NSLog(@"===== %@ release =====",NSStringFromClass(self.class));
+}
 
 @end
