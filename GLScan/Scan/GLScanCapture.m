@@ -22,6 +22,10 @@
 @property (nonatomic, strong) UIView *captureView;// 预览父视图
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;// 预览图层
 
+@property (nonatomic, assign) CGFloat maxZoomFactor;// 最大缩放比例
+@property (nonatomic, assign) CGFloat minZoomFactor;// 最小缩放比例
+@property (nonatomic, assign) CGFloat currentZoomFactor;// 当前缩放比例
+
 @end
 
 @implementation GLScanCapture
@@ -39,7 +43,9 @@
         [self setDefault];
         [self initCapture];
         
-        // 添加
+        // 添加主题区域更改监视
+        // 当AVCaptureDevice的subjectAreaChangeMonitoringEnabled属性为YES时才会发送此通知
+        // 更改subjectAreaChangeMonitoringEnabled属性时需加锁处理
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureDeviceSubjectAreaDidChangeNotification:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:self.capture];
         
     }
@@ -112,6 +118,31 @@
     ];
 }
 
+#pragma mark - ------< 获取最大缩放比例 >------
+- (CGFloat)maxZoomFactor {
+    CGFloat max = 1;
+    if (@available(iOS 11.0, *)) {
+        max = self.capture.maxAvailableVideoZoomFactor;
+    } else {
+        max = self.capture.activeFormat.videoMaxZoomFactor;
+    }
+    
+    if (max > 6) {
+        max = 6;
+    }
+    
+    return max;
+}
+
+#pragma mark - ------< 获取最小缩放比例 >------
+- (CGFloat)minZoomFactor {
+    CGFloat min = 1;
+    if (@available(iOS 11.0, *)) {
+        min = self.capture.minAvailableVideoZoomFactor;
+    }
+    return min;
+}
+
 #pragma mark - ------< 初始化预览视图 >------
 - (AVCaptureVideoPreviewLayer *)previewLayer {
     if (!_previewLayer) {
@@ -144,6 +175,10 @@
         
         // 优先触发双击
         [singleTap requireGestureRecognizerToFail:doubleTap];
+        
+        // 给预览父视图添加缩放手势
+        UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
+        [_captureView addGestureRecognizer:pinch];
     }
     return _captureView;
 }
@@ -209,7 +244,7 @@
     CFRelease(metadataDict);
     NSDictionary *exifMetadata = [[metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy];
     CGFloat brightnessValue = [[exifMetadata objectForKey:(NSString *)kCGImagePropertyExifBrightnessValue] floatValue];
-    NSLog(@"====%f",brightnessValue);
+//    NSLog(@"====%f",brightnessValue);
 }
 
 #pragma mark - ------< 开启会话 >------
@@ -271,14 +306,31 @@
         [UIView animateWithDuration:0.3 animations:^{
             if (self.capture.videoZoomFactor == 1) {
 //                self.captureView.transform = CGAffineTransformMakeScale(2, 2);
-                [self.capture rampToVideoZoomFactor:2 withRate:3];
+                [self.capture rampToVideoZoomFactor:self.maxZoomFactor withRate:3];
             } else {
 //                self.captureView.transform = CGAffineTransformMakeScale(1, 1);
-                [self.capture rampToVideoZoomFactor:1 withRate:3];
+                [self.capture rampToVideoZoomFactor:self.minZoomFactor withRate:3];
             }
         }completion:^(BOOL finished) {
             [self.capture unlockForConfiguration];
         }];
+    }
+}
+
+#pragma mark - ------< 给预览父视图添加缩放手势 >------
+- (void)pinchAction:(UIPinchGestureRecognizer *)pinch {
+    if (pinch.state == UIGestureRecognizerStateBegan) {
+        self.currentZoomFactor = self.capture.videoZoomFactor;
+    } else if (pinch.state == UIGestureRecognizerStateChanged) {
+        CGFloat currentZoomFactor = self.currentZoomFactor * pinch.scale;        
+        if (currentZoomFactor < self.maxZoomFactor &&
+            currentZoomFactor > self.minZoomFactor) {
+            if ([self.capture lockForConfiguration:nil]) {
+                self.capture.videoZoomFactor = currentZoomFactor;
+
+                [self.capture unlockForConfiguration];
+            }
+        }
     }
 }
 

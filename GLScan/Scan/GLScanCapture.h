@@ -20,16 +20,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 预览图层父视图，也可以通过初始化方法传入，
 @property (nonatomic, strong) UIView *showView;
+
 /// 开启会话
 - (void)startRunning;
+
 /// 停止会话
 - (void)stopRunning;
 
-/// 是否可以点击进行自动对焦，默认NO
+/// 是否可以点击自动对焦，默认NO
 @property (nonatomic, assign) BOOL isSingleTapAutoFocus;
 
 /// 是否可以双击放大，默认NO
 @property (nonatomic, assign) BOOL isDoubleTapScale;
+
+///// 最大缩放比例，默认3
+//@property (nonatomic, assign) CGFloat maxZoomFactor;
+//
+///// 最小缩放比例，默认1
+//@property (nonatomic, assign) CGFloat minZoomFactor;
+//
+///// 当前缩放比例，初始1
+//@property (nonatomic, assign) CGFloat currentZoomFactor;
 
 @end
 
