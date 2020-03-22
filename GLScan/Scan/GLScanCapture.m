@@ -12,7 +12,7 @@
 
 @interface GLScanCapture ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
-@property (nonatomic, strong) AVCaptureDevice *capture;
+@property (nonatomic, strong) AVCaptureDevice *device;
 @property (nonatomic, strong) AVCaptureDeviceInput *input;
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;// ios 9 及以下
 @property (nonatomic, strong) AVCapturePhotoOutput *photoOutput;// iOS 10 及以上
@@ -46,7 +46,7 @@
         // 添加主题区域更改监视
         // 当AVCaptureDevice的subjectAreaChangeMonitoringEnabled属性为YES时才会发送此通知
         // 更改subjectAreaChangeMonitoringEnabled属性时需加锁处理
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureDeviceSubjectAreaDidChangeNotification:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:self.capture];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureDeviceSubjectAreaDidChangeNotification:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:self.device];
         
     }
     return self;
@@ -62,19 +62,19 @@
 - (void)initCapture {
     if ([self isAuthority] == NO) return;
     // 获取摄像设备
-    self.capture = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     // 当启动AVCaptureDeviceSubjectAreaDidChangeNotification通知时
     // 需将subjectAreaChangeMonitoringEnabled改为YES
-    [self.capture lockForConfiguration:nil];
-    self.capture.subjectAreaChangeMonitoringEnabled = YES;
-    [self.capture unlockForConfiguration];
+    [self.device lockForConfiguration:nil];
+    self.device.subjectAreaChangeMonitoringEnabled = YES;
+    [self.device unlockForConfiguration];
     // 设置会话对象
     self.session = [[AVCaptureSession alloc] init];
     // 设置会话采集率
     self.session.sessionPreset = AVCaptureSessionPreset1920x1080;
     
     // 创建摄像设备输入流
-    self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.capture error:nil];
+    self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
     if ([self.session canAddInput:self.input]) {
         [self.session addInput:self.input];
     }
@@ -122,13 +122,14 @@
 - (CGFloat)maxZoomFactor {
     CGFloat max = 1;
     if (@available(iOS 11.0, *)) {
-        max = self.capture.maxAvailableVideoZoomFactor;
+        max = self.device.maxAvailableVideoZoomFactor;
     } else {
-        max = self.capture.activeFormat.videoMaxZoomFactor;
+        max = self.device.activeFormat.videoMaxZoomFactor;
     }
     
-    if (max > 6) {
-        max = 6;
+    // 对最大缩放比例再次做限制
+    if (max > 5) {
+        max = 5;
     }
     
     return max;
@@ -138,7 +139,7 @@
 - (CGFloat)minZoomFactor {
     CGFloat min = 1;
     if (@available(iOS 11.0, *)) {
-        min = self.capture.minAvailableVideoZoomFactor;
+        min = self.device.minAvailableVideoZoomFactor;
     }
     return min;
 }
@@ -296,23 +297,23 @@
 - (void)doubleTapAction:(UITapGestureRecognizer *)doubleTap {
     if (self.isDoubleTapScale == NO) return;
     CGPoint tapPoint = [doubleTap locationInView:self.captureView];
-    [self.capture unlockForConfiguration];
-    if ([self.capture lockForConfiguration:nil]) {
-        if ([self.capture isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-            self.capture.focusPointOfInterest = tapPoint;
-            self.capture.focusMode = AVCaptureFocusModeAutoFocus;
+    [self.device unlockForConfiguration];
+    if ([self.device lockForConfiguration:nil]) {
+        if ([self.device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            self.device.focusPointOfInterest = tapPoint;
+            self.device.focusMode = AVCaptureFocusModeAutoFocus;
         }
         
         [UIView animateWithDuration:0.3 animations:^{
-            if (self.capture.videoZoomFactor == 1) {
+            if (self.device.videoZoomFactor == self.minZoomFactor) {
 //                self.captureView.transform = CGAffineTransformMakeScale(2, 2);
-                [self.capture rampToVideoZoomFactor:self.maxZoomFactor withRate:3];
+                [self.device rampToVideoZoomFactor:self.maxZoomFactor withRate:3];
             } else {
 //                self.captureView.transform = CGAffineTransformMakeScale(1, 1);
-                [self.capture rampToVideoZoomFactor:self.minZoomFactor withRate:3];
+                [self.device rampToVideoZoomFactor:self.minZoomFactor withRate:3];
             }
         }completion:^(BOOL finished) {
-            [self.capture unlockForConfiguration];
+            [self.device unlockForConfiguration];
         }];
     }
 }
@@ -320,15 +321,15 @@
 #pragma mark - ------< 给预览父视图添加缩放手势 >------
 - (void)pinchAction:(UIPinchGestureRecognizer *)pinch {
     if (pinch.state == UIGestureRecognizerStateBegan) {
-        self.currentZoomFactor = self.capture.videoZoomFactor;
+        self.currentZoomFactor = self.device.videoZoomFactor;
     } else if (pinch.state == UIGestureRecognizerStateChanged) {
         CGFloat currentZoomFactor = self.currentZoomFactor * pinch.scale;        
         if (currentZoomFactor < self.maxZoomFactor &&
             currentZoomFactor > self.minZoomFactor) {
-            if ([self.capture lockForConfiguration:nil]) {
-                self.capture.videoZoomFactor = currentZoomFactor;
+            if ([self.device lockForConfiguration:nil]) {
+                self.device.videoZoomFactor = currentZoomFactor;
 
-                [self.capture unlockForConfiguration];
+                [self.device unlockForConfiguration];
             }
         }
     }
@@ -342,25 +343,22 @@
 
 #pragma mark - ------< 触发对焦 >------
 - (void)setFocusCursorWithPoint:(CGPoint)point focusModel:(AVCaptureFocusMode)focusModel{
-    // 先判断是否支持控制对焦
-    AVCaptureDevice *device = self.input.device;
-    
     //对拍照设备操作前，先进行锁定，防止其他线程w访问
     NSError *error = nil;
     [self.session beginConfiguration];
-    if ([device lockForConfiguration:&error]) {
+    if ([self.device lockForConfiguration:&error]) {
         
         // 获取聚焦点
         CGPoint focusPoint = [self.previewLayer captureDevicePointOfInterestForPoint:point];
         
         // 设置聚焦点，必须先设置聚焦点再设置聚焦模式
-        if ([device isFocusPointOfInterestSupported]) {
-            device.focusPointOfInterest = focusPoint;
+        if ([self.device isFocusPointOfInterestSupported]) {
+            self.device.focusPointOfInterest = focusPoint;
         }
         
         // 设置聚焦模式
-        if ([device isFocusModeSupported:focusModel]) {
-            device.focusMode = focusModel;
+        if ([self.device isFocusModeSupported:focusModel]) {
+            self.device.focusMode = focusModel;
         }
         
         [UIView animateWithDuration:0.3 animations:^{
@@ -369,7 +367,7 @@
             [UIView animateWithDuration:0.3 animations:^{
                 self.captureView.transform = CGAffineTransformIdentity;
             } completion:^(BOOL finished) {
-                [device unlockForConfiguration];
+                [self.device unlockForConfiguration];
                 [self.session commitConfiguration];
             }];
         }];
