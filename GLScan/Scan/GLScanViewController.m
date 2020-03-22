@@ -8,8 +8,9 @@
 
 #import "GLScanViewController.h"
 #import "GLScanCapture.h"
+#import "GLWebViewController.h"
 
-@interface GLScanViewController ()
+@interface GLScanViewController ()<GLScanCaptureDelegate>
 
 @property (nonatomic, strong) GLScanCapture *capture;
 
@@ -24,18 +25,21 @@
     self.view.backgroundColor = UIColor.blackColor;
     
     self.capture = [[GLScanCapture alloc] initWithScanShowView:self.view];
+    self.capture.delegate = self;
+    self.capture.isDoubleTapScale = YES;
+    self.capture.isPinchScale = YES;
     [self.capture startRunning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)gl_capture:(GLScanCapture *)scanCapture resultText:(NSString *)resultText {
+    if (resultText) {
+        [scanCapture stopRunning];
+        GLWebViewController *vc = [[GLWebViewController alloc] init];
+        vc.urlString = resultText;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
-*/
 
 - (void)dealloc {
     NSLog(@"===== %@ release =====",NSStringFromClass(self.class));

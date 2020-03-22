@@ -18,6 +18,7 @@
 		BC57ED1A2425FA59006D7881 /* GLScanCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED192425FA59006D7881 /* GLScanCapture.m */; };
 		BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1C2425FA6E006D7881 /* GLScanView.m */; };
 		BC57ED202427396E006D7881 /* GLScanViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1F2427396E006D7881 /* GLScanViewController2.m */; };
+		BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED222427C35C006D7881 /* GLWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		BC57ED1C2425FA6E006D7881 /* GLScanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanView.m; sourceTree = "<group>"; };
 		BC57ED1E2427396E006D7881 /* GLScanViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanViewController2.h; sourceTree = "<group>"; };
 		BC57ED1F2427396E006D7881 /* GLScanViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanViewController2.m; sourceTree = "<group>"; };
+		BC57ED212427C35C006D7881 /* GLWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLWebViewController.h; sourceTree = "<group>"; };
+		BC57ED222427C35C006D7881 /* GLWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLWebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 				BC57ECFF2425F74C006D7881 /* SceneDelegate.m */,
 				BC57ED012425F74C006D7881 /* ViewController.h */,
 				BC57ED022425F74C006D7881 /* ViewController.m */,
+				BC57ED212427C35C006D7881 /* GLWebViewController.h */,
+				BC57ED222427C35C006D7881 /* GLWebViewController.m */,
 				BC57ED042425F74C006D7881 /* Main.storyboard */,
 				BC57ED072425F753006D7881 /* Assets.xcassets */,
 				BC57ED092425F753006D7881 /* LaunchScreen.storyboard */,
@@ -175,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */,
 				BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */,
 				BC57ED032425F74C006D7881 /* ViewController.m in Sources */,
 				BC57ECFD2425F74C006D7881 /* AppDelegate.m in Sources */,

@@ -26,6 +26,8 @@
 @property (nonatomic, assign) CGFloat minZoomFactor;// 最小缩放比例
 @property (nonatomic, assign) CGFloat currentZoomFactor;// 当前缩放比例
 
+@property (nonatomic, assign) BOOL bHadAutoVideoZoom;
+
 @end
 
 @implementation GLScanCapture
@@ -48,6 +50,9 @@
         // 更改subjectAreaChangeMonitoringEnabled属性时需加锁处理
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureDeviceSubjectAreaDidChangeNotification:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:self.device];
         
+        // 屏幕旋转通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrameNotification:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+        
     }
     return self;
 }
@@ -56,6 +61,8 @@
 - (void)setDefault {
     self.isSingleTapAutoFocus = NO;
     self.isDoubleTapScale = NO;
+    self.isPinchScale = NO;
+    self.bHadAutoVideoZoom = NO;
 }
 
 #pragma mark - ------< 初始化相机等输入对象 >------
@@ -98,6 +105,10 @@
     if ([self.session canAddOutput:videoDataOutput]) {
         [self.session addOutput:videoDataOutput];
     }
+    
+    self.stillImageOutput = [[AVCaptureStillImageOutput alloc]init];
+    NSDictionary *outputSettings = [[NSDictionary alloc]initWithObjectsAndKeys:AVVideoCodecJPEG,AVVideoCodecKey ,nil];
+    [self.stillImageOutput setOutputSettings:outputSettings];
 }
 
 #pragma mark - ------< 扫码类型 >------
@@ -235,7 +246,65 @@
             scanText = text;
         }
     }
-    NSLog(@"====1%@",scanText);
+    if (!self.bHadAutoVideoZoom) {
+        AVMetadataMachineReadableCodeObject *obj = (AVMetadataMachineReadableCodeObject*)[self.previewLayer transformedMetadataObjectForMetadataObject:metadataObjects.lastObject];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self changeVideoScale:obj];
+        });
+        self.bHadAutoVideoZoom  =YES;
+        return;
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(gl_capture:resultText:)]) {
+        [self.delegate gl_capture:self resultText:scanText];
+    }
+}
+
+-(void)changeVideoScale:(AVMetadataMachineReadableCodeObject*)objc{
+    NSArray *array = objc.corners;
+    CGPoint point = CGPointZero;
+    int index = 0;
+    CFDictionaryRef dic = (__bridge CFDictionaryRef)(array[index++]);
+    // 把字典转换为点，存在point里，成功返回true 其他false
+    CGPointMakeWithDictionaryRepresentation(dic, &point);
+    CGPoint point2 = CGPointZero;
+    CGPointMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)array[2], &point2);
+//    self.centerPoint = CGPointMake((point.x + point2.x) / 2, (point.y + point2.y) / 2);
+    CGFloat scace = 150/(point2.x-point.x);
+    [self setVideoScale:scace];
+    
+    return;
+    
+}
+-(void)setVideoScale:(CGFloat)scale{
+    [self.input.device lockForConfiguration:nil];
+    AVCaptureConnection *videoConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:self.stillImageOutput.connections];
+    CGFloat maxScaleAndCropfactor = ([[self.stillImageOutput connectionWithMediaType:AVMediaTypeVideo]videoMaxScaleAndCropFactor])/16;
+    if (scale > maxScaleAndCropfactor) {
+        scale = maxScaleAndCropfactor;
+        
+    }else if (scale < 1){
+        scale = 1;
+    }
+  
+    videoConnection.videoScaleAndCropFactor = scale;
+    
+    //放大预览图
+    if ([self.device lockForConfiguration:nil]) {
+        [self.device setVideoZoomFactor:1.5];
+//        [self.device rampToVideoZoomFactor:1.5 withRate:5];
+        [self.device unlockForConfiguration];
+    }
+}
+
+-(AVCaptureConnection*)connectionWithMediaType:(NSString*)mediaType fromConnections:(NSArray*)connections{
+    for (AVCaptureConnection *connection in connections) {
+        for (AVCaptureInputPort *port in [connection inputPorts]) {
+            if ([[port mediaType] isEqualToString:mediaType]) {
+                return connection;
+            }
+        }
+    }
+    return nil;
 }
 
 #pragma mark - ------< AVCaptureVideoDataOutputSampleBufferDelegate >------
@@ -287,7 +356,7 @@
 
 #pragma mark - ------< 给预览父视图添加单击手势 >------
 - (void)singleTapAction:(UITapGestureRecognizer *)singleTap {
-    if (self.isSingleTapAutoFocus == NO) return;
+    if (self.isSingleTapAutoFocus == NO || ![self.session isRunning]) return;
     CGPoint tapPoint = [singleTap locationInView:self.captureView];
     [self setFocusCursorWithPoint:tapPoint focusModel:AVCaptureFocusModeAutoFocus];
     
@@ -295,7 +364,7 @@
 
 #pragma mark - ------< 给预览父视图添加双击手势 >------
 - (void)doubleTapAction:(UITapGestureRecognizer *)doubleTap {
-    if (self.isDoubleTapScale == NO) return;
+    if (self.isDoubleTapScale == NO || ![self.session isRunning]) return;
     CGPoint tapPoint = [doubleTap locationInView:self.captureView];
     [self.device unlockForConfiguration];
     if ([self.device lockForConfiguration:nil]) {
@@ -306,11 +375,9 @@
         
         [UIView animateWithDuration:0.3 animations:^{
             if (self.device.videoZoomFactor == self.minZoomFactor) {
-//                self.captureView.transform = CGAffineTransformMakeScale(2, 2);
-                [self.device rampToVideoZoomFactor:self.maxZoomFactor withRate:3];
+                [self.device rampToVideoZoomFactor:self.maxZoomFactor withRate:8];
             } else {
-//                self.captureView.transform = CGAffineTransformMakeScale(1, 1);
-                [self.device rampToVideoZoomFactor:self.minZoomFactor withRate:3];
+                [self.device rampToVideoZoomFactor:self.minZoomFactor withRate:8];
             }
         }completion:^(BOOL finished) {
             [self.device unlockForConfiguration];
@@ -320,6 +387,7 @@
 
 #pragma mark - ------< 给预览父视图添加缩放手势 >------
 - (void)pinchAction:(UIPinchGestureRecognizer *)pinch {
+    if (self.isPinchScale == NO || ![self.session isRunning]) return;
     if (pinch.state == UIGestureRecognizerStateBegan) {
         self.currentZoomFactor = self.device.videoZoomFactor;
     } else if (pinch.state == UIGestureRecognizerStateChanged) {
@@ -336,9 +404,15 @@
 }
 
 #pragma mark - ------< 通知 >------
+#pragma mark - ------< 主题区域更改通知 >------
 - (void)captureDeviceSubjectAreaDidChangeNotification:(NSNotification *)notif {
     CGPoint point = self.captureView.center;
     [self setFocusCursorWithPoint:point focusModel:AVCaptureFocusModeContinuousAutoFocus];
+}
+
+- (void)statusBarDidChangeFrameNotification:(NSNotification *)notif {
+    self.captureView.frame = self.showView.bounds;
+    self.previewLayer.frame = self.captureView.bounds;
 }
 
 #pragma mark - ------< 触发对焦 >------
