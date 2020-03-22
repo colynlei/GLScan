@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "GLScanViewController.h"
+#import "GLScanViewController2.h"
 
 @interface ViewController ()
 
@@ -20,11 +21,17 @@
     // Do any additional setup after loading the view.
 }
 
-- (IBAction)scanBtnAction:(id)sender {
+- (IBAction)scanBtn_protocol_Action:(id)sender {
     
     GLScanViewController *scanVC = [[GLScanViewController alloc] init];
     [self.navigationController pushViewController:scanVC animated:YES];
     
 }
+- (IBAction)scanBtn_block_Action:(id)sender {
+    GLScanViewController2 *scanVC = [[GLScanViewController2 alloc] init];
+    [self.navigationController pushViewController:scanVC animated:YES];
+}
+
+
 
 @end

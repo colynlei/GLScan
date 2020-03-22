@@ -1,21 +1,30 @@
 //
-//  GLScanViewController.m
+//  GLScanViewController2.m
 //  GLScan
 //
-//  Created by 『国』 🇨🇳 on 2020/3/21.
+//  Created by 『国』 🇨🇳 on 2020/3/22.
 //  Copyright © 2020 『国』 🇨🇳. All rights reserved.
 //
 
-#import "GLScanViewController.h"
+#import "GLScanViewController2.h"
 #import "GLScanCapture.h"
 
-@interface GLScanViewController ()
+@interface GLScanViewController2 ()
 
 @property (nonatomic, strong) GLScanCapture *capture;
 
 @end
 
-@implementation GLScanViewController
+@implementation GLScanViewController2
+
+- (void)loadView {
+    [super loadView];
+    self.capture = [[GLScanCapture alloc] init];
+    self.capture.showView = self.view;
+    self.capture.isDoubleTapScale = YES;
+    self.capture.isSingleTapAutoFocus = YES;
+    [self.capture startRunning];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,8 +32,13 @@
     
     self.view.backgroundColor = UIColor.blackColor;
     
-    self.capture = [[GLScanCapture alloc] initWithScanShowView:self.view];
-    [self.capture startRunning];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+
 }
 
 /*
@@ -36,9 +50,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-- (void)dealloc {
-    NSLog(@"===== %@ release =====",NSStringFromClass(self.class));
-}
 
 @end

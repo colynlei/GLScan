@@ -32,17 +32,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJz-89-zI2">
-                                <rect key="frame" x="157" y="288" width="100" height="50"/>
+                                <rect key="frame" x="57" y="288" width="300" height="50"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="6Qu-NX-ZA7"/>
+                                    <constraint firstAttribute="width" constant="300" id="6Qu-NX-ZA7"/>
                                     <constraint firstAttribute="height" constant="50" id="M4S-ji-MYR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <state key="normal" title="扫码">
+                                <state key="normal" title="扫码集成方式一：代理">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="scanBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RLF-1Q-tnt"/>
+                                    <action selector="scanBtn_protocol_Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XDG-HV-4XP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0b-1x-0a0">
+                                <rect key="frame" x="57" y="388" width="300" height="50"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="扫码集成方式二：block">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanBtn_block_Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OKv-2O-hqZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -50,6 +62,10 @@
                         <constraints>
                             <constraint firstItem="kJz-89-zI2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9jP-7h-sWz"/>
                             <constraint firstItem="kJz-89-zI2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="UFC-Q7-cxu"/>
+                            <constraint firstItem="l0b-1x-0a0" firstAttribute="height" secondItem="kJz-89-zI2" secondAttribute="height" id="dqU-Se-hAz"/>
+                            <constraint firstItem="l0b-1x-0a0" firstAttribute="top" secondItem="kJz-89-zI2" secondAttribute="bottom" constant="50" id="nbh-WA-Xff"/>
+                            <constraint firstItem="l0b-1x-0a0" firstAttribute="width" secondItem="kJz-89-zI2" secondAttribute="width" id="vqO-6w-LlF"/>
+                            <constraint firstItem="l0b-1x-0a0" firstAttribute="centerX" secondItem="kJz-89-zI2" secondAttribute="centerX" id="wbY-WE-3n7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

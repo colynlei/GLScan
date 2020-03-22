@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否可以点击进行自动对焦，默认NO
 @property (nonatomic, assign) BOOL isSingleTapAutoFocus;
 
-/// 是否可以双击放大，默认YES
+/// 是否可以双击放大，默认NO
 @property (nonatomic, assign) BOOL isDoubleTapScale;
 
 @end
