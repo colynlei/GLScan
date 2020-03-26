@@ -1,5 +1,5 @@
 //
-//  GLScanCapture.h
+//  GLScanQRCode.h
 //  GLScan
 //
 //  Created by 『国』 🇨🇳 on 2020/3/21.
@@ -11,21 +11,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class GLScanCapture;
-@protocol GLScanCaptureDelegate <NSObject>
+@class GLScanQRCode;
+@protocol GLScanQRCodeDelegate <NSObject>
 
-- (void)gl_capture:(GLScanCapture *)scanCapture resultText:(NSString *)resultText;
+- (void)gl_capture:(GLScanQRCode *)scanCapture resultText:(NSString *)resultText;
 
 @end
 
-@interface GLScanCapture : NSObject
+@interface GLScanQRCode : NSObject
 
 /// 初始化方法
 /// @param showView 预览图层父视图
 - (instancetype)initWithScanShowView:(UIView * _Nullable)showView;
 
 // 接收扫描返回结果可以用代理，也可以用block
-@property (nonatomic, weak) id<GLScanCaptureDelegate> delegate;
+@property (nonatomic, weak) id<GLScanQRCodeDelegate> delegate;
 
 /// 预览图层父视图，也可以通过初始化方法传入，
 @property (nonatomic, strong) UIView *showView;

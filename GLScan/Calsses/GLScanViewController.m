@@ -7,12 +7,12 @@
 //
 
 #import "GLScanViewController.h"
-#import "GLScanCapture.h"
+#import "GLScanQRCode.h"
 #import "GLWebViewController.h"
 
-@interface GLScanViewController ()<GLScanCaptureDelegate>
+@interface GLScanViewController ()<GLScanQRCodeDelegate>
 
-@property (nonatomic, strong) GLScanCapture *capture;
+@property (nonatomic, strong) GLScanQRCode *capture;
 
 @end
 
@@ -24,14 +24,14 @@
     
     self.view.backgroundColor = UIColor.blackColor;
     
-    self.capture = [[GLScanCapture alloc] initWithScanShowView:self.view];
+    self.capture = [[GLScanQRCode alloc] initWithScanShowView:self.view];
     self.capture.delegate = self;
     self.capture.isDoubleTapScale = YES;
     self.capture.isPinchScale = YES;
     [self.capture startRunning];
 }
 
-- (void)gl_capture:(GLScanCapture *)scanCapture resultText:(NSString *)resultText {
+- (void)gl_capture:(GLScanQRCode *)scanCapture resultText:(NSString *)resultText {
     if (resultText) {
         [scanCapture stopRunning];
         GLWebViewController *vc = [[GLWebViewController alloc] init];

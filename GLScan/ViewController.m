@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "GLScanViewController.h"
 #import "GLScanViewController2.h"
+#import "GLGenerateQRCodeViewController.h"
 
 @interface ViewController ()
 
@@ -32,6 +33,10 @@
     [self.navigationController pushViewController:scanVC animated:YES];
 }
 
+- (IBAction)generateQRCodeAction:(id)sender {
+    GLGenerateQRCodeViewController *vc = [[GLGenerateQRCodeViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 @end

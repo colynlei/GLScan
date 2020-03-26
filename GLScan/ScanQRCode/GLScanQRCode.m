@@ -1,16 +1,16 @@
 //
-//  GLScanCapture.m
+//  GLScanQRCode.m
 //  GLScan
 //
 //  Created by 『国』 🇨🇳 on 2020/3/21.
 //  Copyright © 2020 『国』 🇨🇳. All rights reserved.
 //
 
-#import "GLScanCapture.h"
+#import "GLScanQRCode.h"
 #import <Photos/Photos.h>
 
 
-@interface GLScanCapture ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface GLScanQRCode ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic, strong) AVCaptureDevice *device;
 @property (nonatomic, strong) AVCaptureDeviceInput *input;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation GLScanCapture
+@implementation GLScanQRCode
 
 
 - (instancetype)init {
@@ -343,8 +343,9 @@
             }];
         }
     }
-    
-    [self.session startRunning];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self.session startRunning];
+    });
 }
 
 #pragma mark - ------< 关闭会话 >------

@@ -57,12 +57,27 @@
                                     <action selector="scanBtn_block_Action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OKv-2O-hqZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IuO-lM-iJ6">
+                                <rect key="frame" x="57" y="488" width="300" height="50"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="生成二维码">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="generateQRCodeAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="feB-BW-BrL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="IuO-lM-iJ6" firstAttribute="height" secondItem="l0b-1x-0a0" secondAttribute="height" id="3cF-Xj-m1g"/>
                             <constraint firstItem="kJz-89-zI2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9jP-7h-sWz"/>
+                            <constraint firstItem="IuO-lM-iJ6" firstAttribute="width" secondItem="l0b-1x-0a0" secondAttribute="width" id="DB5-dj-yff"/>
+                            <constraint firstItem="IuO-lM-iJ6" firstAttribute="top" secondItem="l0b-1x-0a0" secondAttribute="bottom" constant="50" id="S6n-gf-b13"/>
                             <constraint firstItem="kJz-89-zI2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="UFC-Q7-cxu"/>
                             <constraint firstItem="l0b-1x-0a0" firstAttribute="height" secondItem="kJz-89-zI2" secondAttribute="height" id="dqU-Se-hAz"/>
+                            <constraint firstItem="IuO-lM-iJ6" firstAttribute="centerX" secondItem="l0b-1x-0a0" secondAttribute="centerX" id="far-Ig-g7C"/>
                             <constraint firstItem="l0b-1x-0a0" firstAttribute="top" secondItem="kJz-89-zI2" secondAttribute="bottom" constant="50" id="nbh-WA-Xff"/>
                             <constraint firstItem="l0b-1x-0a0" firstAttribute="width" secondItem="kJz-89-zI2" secondAttribute="width" id="vqO-6w-LlF"/>
                             <constraint firstItem="l0b-1x-0a0" firstAttribute="centerX" secondItem="kJz-89-zI2" secondAttribute="centerX" id="wbY-WE-3n7"/>

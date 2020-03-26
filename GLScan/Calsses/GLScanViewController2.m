@@ -7,11 +7,11 @@
 //
 
 #import "GLScanViewController2.h"
-#import "GLScanCapture.h"
+#import "GLScanQRCode.h"
 
 @interface GLScanViewController2 ()
 
-@property (nonatomic, strong) GLScanCapture *capture;
+@property (nonatomic, strong) GLScanQRCode *capture;
 
 @end
 
@@ -19,7 +19,7 @@
 
 - (void)loadView {
     [super loadView];
-    self.capture = [[GLScanCapture alloc] init];
+    self.capture = [[GLScanQRCode alloc] init];
     self.capture.showView = self.view;
     self.capture.isDoubleTapScale = YES;
     self.capture.isSingleTapAutoFocus = YES;

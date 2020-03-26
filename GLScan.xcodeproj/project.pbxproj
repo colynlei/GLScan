@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC55D4842428975600D1C966 /* GLGenerateQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = BC55D4832428975600D1C966 /* GLGenerateQRCode.m */; };
+		BC55D48C2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC55D48A2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m */; };
+		BC55D48D2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC55D48B2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib */; };
 		BC57ECFD2425F74C006D7881 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ECFC2425F74C006D7881 /* AppDelegate.m */; };
 		BC57ED002425F74C006D7881 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ECFF2425F74C006D7881 /* SceneDelegate.m */; };
 		BC57ED032425F74C006D7881 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED022425F74C006D7881 /* ViewController.m */; };
@@ -15,13 +18,18 @@
 		BC57ED0B2425F753006D7881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC57ED092425F753006D7881 /* LaunchScreen.storyboard */; };
 		BC57ED0E2425F753006D7881 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED0D2425F753006D7881 /* main.m */; };
 		BC57ED172425FA1A006D7881 /* GLScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED162425FA1A006D7881 /* GLScanViewController.m */; };
-		BC57ED1A2425FA59006D7881 /* GLScanCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED192425FA59006D7881 /* GLScanCapture.m */; };
+		BC57ED1A2425FA59006D7881 /* GLScanQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED192425FA59006D7881 /* GLScanQRCode.m */; };
 		BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1C2425FA6E006D7881 /* GLScanView.m */; };
 		BC57ED202427396E006D7881 /* GLScanViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1F2427396E006D7881 /* GLScanViewController2.m */; };
 		BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED222427C35C006D7881 /* GLWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC55D4822428975600D1C966 /* GLGenerateQRCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLGenerateQRCode.h; sourceTree = "<group>"; };
+		BC55D4832428975600D1C966 /* GLGenerateQRCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLGenerateQRCode.m; sourceTree = "<group>"; };
+		BC55D4892428A9EC00D1C966 /* GLGenerateQRCodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLGenerateQRCodeViewController.h; sourceTree = "<group>"; };
+		BC55D48A2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLGenerateQRCodeViewController.m; sourceTree = "<group>"; };
+		BC55D48B2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GLGenerateQRCodeViewController.xib; sourceTree = "<group>"; };
 		BC57ECF82425F74B006D7881 /* GLScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GLScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC57ECFB2425F74C006D7881 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BC57ECFC2425F74C006D7881 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -36,8 +44,8 @@
 		BC57ED0D2425F753006D7881 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC57ED152425FA1A006D7881 /* GLScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanViewController.h; sourceTree = "<group>"; };
 		BC57ED162425FA1A006D7881 /* GLScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanViewController.m; sourceTree = "<group>"; };
-		BC57ED182425FA59006D7881 /* GLScanCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanCapture.h; sourceTree = "<group>"; };
-		BC57ED192425FA59006D7881 /* GLScanCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanCapture.m; sourceTree = "<group>"; };
+		BC57ED182425FA59006D7881 /* GLScanQRCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanQRCode.h; sourceTree = "<group>"; };
+		BC57ED192425FA59006D7881 /* GLScanQRCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanQRCode.m; sourceTree = "<group>"; };
 		BC57ED1B2425FA6E006D7881 /* GLScanView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanView.h; sourceTree = "<group>"; };
 		BC57ED1C2425FA6E006D7881 /* GLScanView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanView.m; sourceTree = "<group>"; };
 		BC57ED1E2427396E006D7881 /* GLScanViewController2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLScanViewController2.h; sourceTree = "<group>"; };
@@ -57,6 +65,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BC55D4852428A8E800D1C966 /* Calsses */ = {
+			isa = PBXGroup;
+			children = (
+				BC57ED152425FA1A006D7881 /* GLScanViewController.h */,
+				BC57ED162425FA1A006D7881 /* GLScanViewController.m */,
+				BC57ED1E2427396E006D7881 /* GLScanViewController2.h */,
+				BC57ED1F2427396E006D7881 /* GLScanViewController2.m */,
+				BC55D4892428A9EC00D1C966 /* GLGenerateQRCodeViewController.h */,
+				BC55D48A2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m */,
+				BC55D48B2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib */,
+			);
+			path = Calsses;
+			sourceTree = "<group>";
+		};
 		BC57ECEF2425F74B006D7881 = {
 			isa = PBXGroup;
 			children = (
@@ -76,7 +98,8 @@
 		BC57ECFA2425F74C006D7881 /* GLScan */ = {
 			isa = PBXGroup;
 			children = (
-				BC57ED142425F9FC006D7881 /* Scan */,
+				BC57ED142425F9FC006D7881 /* ScanQRCode */,
+				BC55D4852428A8E800D1C966 /* Calsses */,
 				BC57ECFB2425F74C006D7881 /* AppDelegate.h */,
 				BC57ECFC2425F74C006D7881 /* AppDelegate.m */,
 				BC57ECFE2425F74C006D7881 /* SceneDelegate.h */,
@@ -94,19 +117,17 @@
 			path = GLScan;
 			sourceTree = "<group>";
 		};
-		BC57ED142425F9FC006D7881 /* Scan */ = {
+		BC57ED142425F9FC006D7881 /* ScanQRCode */ = {
 			isa = PBXGroup;
 			children = (
-				BC57ED152425FA1A006D7881 /* GLScanViewController.h */,
-				BC57ED162425FA1A006D7881 /* GLScanViewController.m */,
-				BC57ED1E2427396E006D7881 /* GLScanViewController2.h */,
-				BC57ED1F2427396E006D7881 /* GLScanViewController2.m */,
-				BC57ED182425FA59006D7881 /* GLScanCapture.h */,
-				BC57ED192425FA59006D7881 /* GLScanCapture.m */,
+				BC57ED182425FA59006D7881 /* GLScanQRCode.h */,
+				BC57ED192425FA59006D7881 /* GLScanQRCode.m */,
 				BC57ED1B2425FA6E006D7881 /* GLScanView.h */,
 				BC57ED1C2425FA6E006D7881 /* GLScanView.m */,
+				BC55D4822428975600D1C966 /* GLGenerateQRCode.h */,
+				BC55D4832428975600D1C966 /* GLGenerateQRCode.m */,
 			);
-			path = Scan;
+			path = ScanQRCode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,6 +190,7 @@
 			files = (
 				BC57ED0B2425F753006D7881 /* LaunchScreen.storyboard in Resources */,
 				BC57ED082425F753006D7881 /* Assets.xcassets in Resources */,
+				BC55D48D2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib in Resources */,
 				BC57ED062425F74C006D7881 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,10 +205,12 @@
 				BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */,
 				BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */,
 				BC57ED032425F74C006D7881 /* ViewController.m in Sources */,
+				BC55D48C2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m in Sources */,
 				BC57ECFD2425F74C006D7881 /* AppDelegate.m in Sources */,
 				BC57ED202427396E006D7881 /* GLScanViewController2.m in Sources */,
+				BC55D4842428975600D1C966 /* GLGenerateQRCode.m in Sources */,
 				BC57ED0E2425F753006D7881 /* main.m in Sources */,
-				BC57ED1A2425FA59006D7881 /* GLScanCapture.m in Sources */,
+				BC57ED1A2425FA59006D7881 /* GLScanQRCode.m in Sources */,
 				BC57ED172425FA1A006D7881 /* GLScanViewController.m in Sources */,
 				BC57ED002425F74C006D7881 /* SceneDelegate.m in Sources */,
 			);
