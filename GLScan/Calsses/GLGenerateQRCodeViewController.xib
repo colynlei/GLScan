@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GLGenerateQRCodeViewController">
             <connections>
                 <outlet property="qrCodeImageView" destination="nkK-Rz-KEc" id="1c3-ke-yf2"/>
+                <outlet property="showQRCodeTextLabel" destination="cpO-5d-6iI" id="iTD-JS-R6p"/>
                 <outlet property="textField" destination="xG6-xr-Sjp" id="bh5-gi-EuR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,8 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入需要转换的字符串" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="xG6-xr-Sjp">
-                    <rect key="frame" x="10" y="194" width="394" height="34"/>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入需要生成二维码的字符串" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="xG6-xr-Sjp">
+                    <rect key="frame" x="10" y="144" width="394" height="34"/>
                     <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="0.493590448943662" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="34" id="wqN-ze-DSv"/>
@@ -29,33 +30,91 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrH-wI-rWv">
-                    <rect key="frame" x="157" y="258" width="100" height="60"/>
+                    <rect key="frame" x="77" y="208" width="100" height="60"/>
                     <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="SPr-iY-yAA"/>
                         <constraint firstAttribute="height" constant="60" id="h8o-KO-bXz"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="生成">
+                    <state key="normal" title="异步生成">
                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                     </state>
                     <connections>
-                        <action selector="generateBtnAction:" destination="-1" eventType="touchUpInside" id="tGp-IJ-YRz"/>
+                        <action selector="asyncGenerateBtnAction:" destination="-1" eventType="touchUpInside" id="S2D-Ry-Zsu"/>
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GE7-qV-VMv">
-                    <rect key="frame" x="0.0" y="338" width="414" height="524"/>
+                    <rect key="frame" x="0.0" y="288" width="414" height="574"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nkK-Rz-KEc">
-                            <rect key="frame" x="63" y="156.5" width="288" height="211"/>
+                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nkK-Rz-KEc">
+                            <rect key="frame" x="77" y="157" width="260" height="260"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.078290052816901406" colorSpace="custom" customColorSpace="sRGB"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="260" id="4u9-Lp-FBh"/>
+                                <constraint firstAttribute="width" constant="260" id="Rqc-cr-hDz"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="vYj-kZ-kFP" appends="YES" id="Rra-hN-uzm"/>
+                            </connections>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wg5-up-r1J">
+                            <rect key="frame" x="57" y="30" width="300" height="60"/>
+                            <color key="backgroundColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="0.12277178697183098" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="9g3-5T-ngY"/>
+                                <constraint firstAttribute="width" constant="300" id="TMx-51-9O0"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
+                            <state key="normal" title="清除"/>
+                            <connections>
+                                <action selector="clearQRCodeBtnAction:" destination="-1" eventType="touchUpInside" id="HT6-re-woL"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpO-5d-6iI">
+                            <rect key="frame" x="20" y="427" width="374" height="137"/>
+                            <color key="backgroundColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="0.11977332746478873" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="长按可以识别二维码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j5U-7h-ebq">
+                            <rect key="frame" x="142.5" y="135" width="129" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.0" alpha="0.37879621478873238" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="0.15990867077464788" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="nkK-Rz-KEc" firstAttribute="centerX" secondItem="GE7-qV-VMv" secondAttribute="centerX" id="H6U-eb-8t9"/>
-                        <constraint firstItem="nkK-Rz-KEc" firstAttribute="centerY" secondItem="GE7-qV-VMv" secondAttribute="centerY" id="xMn-OH-MaE"/>
+                        <constraint firstItem="cpO-5d-6iI" firstAttribute="leading" secondItem="GE7-qV-VMv" secondAttribute="leading" constant="20" id="4yG-X3-Hyb"/>
+                        <constraint firstItem="Wg5-up-r1J" firstAttribute="top" secondItem="GE7-qV-VMv" secondAttribute="top" constant="30" id="Q2J-OG-EiV"/>
+                        <constraint firstItem="nkK-Rz-KEc" firstAttribute="centerX" secondItem="GE7-qV-VMv" secondAttribute="centerX" id="U6E-zY-Tze"/>
+                        <constraint firstItem="nkK-Rz-KEc" firstAttribute="centerY" secondItem="GE7-qV-VMv" secondAttribute="centerY" id="YzL-Z3-MU7"/>
+                        <constraint firstAttribute="trailing" secondItem="cpO-5d-6iI" secondAttribute="trailing" constant="20" id="ZfB-UB-mqe"/>
+                        <constraint firstItem="nkK-Rz-KEc" firstAttribute="top" secondItem="j5U-7h-ebq" secondAttribute="bottom" constant="5" id="eYD-t8-2p3"/>
+                        <constraint firstAttribute="bottom" secondItem="cpO-5d-6iI" secondAttribute="bottom" constant="10" id="owA-ON-xZY"/>
+                        <constraint firstItem="Wg5-up-r1J" firstAttribute="centerX" secondItem="GE7-qV-VMv" secondAttribute="centerX" id="vAk-eR-9ra"/>
+                        <constraint firstItem="j5U-7h-ebq" firstAttribute="centerX" secondItem="nkK-Rz-KEc" secondAttribute="centerX" id="wYu-gZ-Pem"/>
+                        <constraint firstItem="cpO-5d-6iI" firstAttribute="top" secondItem="nkK-Rz-KEc" secondAttribute="bottom" constant="10" id="x7Z-Q2-RiL"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYE-5c-ZBt">
+                    <rect key="frame" x="237" y="208" width="100" height="60"/>
+                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="GnI-WV-Owt"/>
+                        <constraint firstAttribute="height" constant="60" id="jIt-mD-2zN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="同步生成">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="syncGenerateBtnAction:" destination="-1" eventType="touchUpInside" id="lVi-Cb-gSE"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -63,14 +122,21 @@
                 <constraint firstItem="zrH-wI-rWv" firstAttribute="top" secondItem="xG6-xr-Sjp" secondAttribute="bottom" constant="30" id="64g-gv-5pc"/>
                 <constraint firstItem="GE7-qV-VMv" firstAttribute="top" secondItem="zrH-wI-rWv" secondAttribute="bottom" constant="20" id="Bmq-Cr-Fyb"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="xG6-xr-Sjp" secondAttribute="trailing" constant="10" id="Dqs-FJ-PQP"/>
-                <constraint firstItem="zrH-wI-rWv" firstAttribute="centerX" secondItem="xG6-xr-Sjp" secondAttribute="centerX" id="JCH-zP-zaz"/>
+                <constraint firstItem="zrH-wI-rWv" firstAttribute="centerX" secondItem="xG6-xr-Sjp" secondAttribute="centerX" constant="-80" id="JCH-zP-zaz"/>
                 <constraint firstItem="GE7-qV-VMv" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="NUk-Xy-Fay"/>
-                <constraint firstItem="xG6-xr-Sjp" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="150" id="XEo-kg-QjQ"/>
+                <constraint firstItem="FYE-5c-ZBt" firstAttribute="centerX" secondItem="xG6-xr-Sjp" secondAttribute="centerX" constant="80" id="RRe-so-jPW"/>
+                <constraint firstItem="xG6-xr-Sjp" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="100" id="XEo-kg-QjQ"/>
+                <constraint firstItem="FYE-5c-ZBt" firstAttribute="centerY" secondItem="zrH-wI-rWv" secondAttribute="centerY" id="ZdG-oF-Y4D"/>
                 <constraint firstItem="GE7-qV-VMv" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="gP9-A0-OhQ"/>
                 <constraint firstItem="GE7-qV-VMv" firstAttribute="bottom" secondItem="Q5M-cg-NOt" secondAttribute="bottom" id="zw6-Uu-zen"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-            <point key="canvasLocation" x="2.8985507246376816" y="160.04464285714286"/>
+            <point key="canvasLocation" x="86.956521739130437" y="-60.267857142857139"/>
         </view>
+        <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="vYj-kZ-kFP">
+            <connections>
+                <action selector="qrCodeLongPressAction:" destination="-1" id="H1f-Xq-J3u"/>
+            </connections>
+        </pongPressGestureRecognizer>
     </objects>
 </document>

@@ -1,0 +1,20 @@
+PODS:
+  - LookinServer (1.0.0)
+  - SVProgressHUD (2.2.5)
+
+DEPENDENCIES:
+  - LookinServer
+  - SVProgressHUD
+
+SPEC REPOS:
+  trunk:
+    - LookinServer
+    - SVProgressHUD
+
+SPEC CHECKSUMS:
+  LookinServer: 0002891cd3cec5e082a910e897dfe71b4f06b89e
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+
+PODFILE CHECKSUM: fe007da8d21e83efb7d4fa55bcd300ca2e532cfe
+
+COCOAPODS: 1.8.4

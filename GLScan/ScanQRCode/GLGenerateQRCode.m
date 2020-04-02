@@ -11,6 +11,17 @@
 
 @implementation GLGenerateQRCode
 
++ (void)generateQRCodeWithString:(NSString *)string size:(CGFloat)size callBack:(void (^)(UIImage * _Nonnull))callBackBlock {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = [GLGenerateQRCode generateQRCodeWithString:string size:size];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (callBackBlock) {
+                callBackBlock(image);
+            }
+        });
+    });
+}
+
 + (UIImage *)generateQRCodeWithString:(NSString *)string size:(CGFloat)size {
     if (string == nil || string.length == 0) {
         NSLog(@"请传入正确的字符串");
@@ -18,7 +29,7 @@
     }
     if (size == 0) {
         // 二维码宽高默认值
-        size = 80;
+        size = 100;
     }
     // 创建过滤器
     CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
@@ -30,7 +41,7 @@
     
     // 获取生成的二维码
     CIImage *originImage = [filter outputImage];
-    UIImage *image = [GLGenerateQRCode createNoInterPolateFromeCIImage:originImage size:size];
+    UIImage *image = [self createNoInterPolateFromeCIImage:originImage size:size];
     return image;
 }
 

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021E5E9761382E06F96FDF28 /* libPods-GLScan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A255FBE2FEF03A0626371FCF /* libPods-GLScan.a */; };
 		BC55D4842428975600D1C966 /* GLGenerateQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = BC55D4832428975600D1C966 /* GLGenerateQRCode.m */; };
 		BC55D48C2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC55D48A2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m */; };
 		BC55D48D2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC55D48B2428A9EC00D1C966 /* GLGenerateQRCodeViewController.xib */; };
@@ -22,9 +23,13 @@
 		BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1C2425FA6E006D7881 /* GLScanView.m */; };
 		BC57ED202427396E006D7881 /* GLScanViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED1F2427396E006D7881 /* GLScanViewController2.m */; };
 		BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC57ED222427C35C006D7881 /* GLWebViewController.m */; };
+		BCE102352435B82900244FAD /* NSString+GLGenerateQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE102342435B82900244FAD /* NSString+GLGenerateQRCode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		62FB0913D8B0BF80D751F619 /* Pods-GLScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GLScan.debug.xcconfig"; path = "Target Support Files/Pods-GLScan/Pods-GLScan.debug.xcconfig"; sourceTree = "<group>"; };
+		7CBE138E8CEA92C4293842EA /* Pods-GLScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GLScan.release.xcconfig"; path = "Target Support Files/Pods-GLScan/Pods-GLScan.release.xcconfig"; sourceTree = "<group>"; };
+		A255FBE2FEF03A0626371FCF /* libPods-GLScan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GLScan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC55D4822428975600D1C966 /* GLGenerateQRCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLGenerateQRCode.h; sourceTree = "<group>"; };
 		BC55D4832428975600D1C966 /* GLGenerateQRCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLGenerateQRCode.m; sourceTree = "<group>"; };
 		BC55D4892428A9EC00D1C966 /* GLGenerateQRCodeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLGenerateQRCodeViewController.h; sourceTree = "<group>"; };
@@ -52,6 +57,8 @@
 		BC57ED1F2427396E006D7881 /* GLScanViewController2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLScanViewController2.m; sourceTree = "<group>"; };
 		BC57ED212427C35C006D7881 /* GLWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLWebViewController.h; sourceTree = "<group>"; };
 		BC57ED222427C35C006D7881 /* GLWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLWebViewController.m; sourceTree = "<group>"; };
+		BCE102332435B82900244FAD /* NSString+GLGenerateQRCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+GLGenerateQRCode.h"; sourceTree = "<group>"; };
+		BCE102342435B82900244FAD /* NSString+GLGenerateQRCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+GLGenerateQRCode.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,12 +66,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				021E5E9761382E06F96FDF28 /* libPods-GLScan.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92AD0DABC7227DA4F3C8933B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A255FBE2FEF03A0626371FCF /* libPods-GLScan.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BC55D4852428A8E800D1C966 /* Calsses */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +100,8 @@
 			children = (
 				BC57ECFA2425F74C006D7881 /* GLScan */,
 				BC57ECF92425F74B006D7881 /* Products */,
+				EC3568C3140363F72F9DC4CA /* Pods */,
+				92AD0DABC7227DA4F3C8933B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,8 +144,19 @@
 				BC57ED1C2425FA6E006D7881 /* GLScanView.m */,
 				BC55D4822428975600D1C966 /* GLGenerateQRCode.h */,
 				BC55D4832428975600D1C966 /* GLGenerateQRCode.m */,
+				BCE102332435B82900244FAD /* NSString+GLGenerateQRCode.h */,
+				BCE102342435B82900244FAD /* NSString+GLGenerateQRCode.m */,
 			);
 			path = ScanQRCode;
+			sourceTree = "<group>";
+		};
+		EC3568C3140363F72F9DC4CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				62FB0913D8B0BF80D751F619 /* Pods-GLScan.debug.xcconfig */,
+				7CBE138E8CEA92C4293842EA /* Pods-GLScan.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,9 +166,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC57ED112425F753006D7881 /* Build configuration list for PBXNativeTarget "GLScan" */;
 			buildPhases = (
+				41284C24F6E5C9430EF905FC /* [CP] Check Pods Manifest.lock */,
 				BC57ECF42425F74B006D7881 /* Sources */,
 				BC57ECF52425F74B006D7881 /* Frameworks */,
 				BC57ECF62425F74B006D7881 /* Resources */,
+				B843CA90985427F551B0D4DF /* [CP] Copy Pods Resources */,
+				FE8EB06FF563F974864D78D9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -197,12 +229,72 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		41284C24F6E5C9430EF905FC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GLScan-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B843CA90985427F551B0D4DF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE8EB06FF563F974864D78D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GLScan/Pods-GLScan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BC57ECF42425F74B006D7881 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				BC57ED232427C35C006D7881 /* GLWebViewController.m in Sources */,
+				BCE102352435B82900244FAD /* NSString+GLGenerateQRCode.m in Sources */,
 				BC57ED1D2425FA6E006D7881 /* GLScanView.m in Sources */,
 				BC57ED032425F74C006D7881 /* ViewController.m in Sources */,
 				BC55D48C2428A9EC00D1C966 /* GLGenerateQRCodeViewController.m in Sources */,
@@ -350,6 +442,7 @@
 		};
 		BC57ED122425F753006D7881 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 62FB0913D8B0BF80D751F619 /* Pods-GLScan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -369,6 +462,7 @@
 		};
 		BC57ED132425F753006D7881 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CBE138E8CEA92C4293842EA /* Pods-GLScan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

@@ -45,6 +45,20 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否可以手势缩放，默认NO
 @property (nonatomic, assign) BOOL isPinchScale;
 
+#pragma mark - ------< 识别图片中二维码 >------
+///// 对象方法，从图片中获取二维码
+//- (NSArray *)getQRCodeFromImage:(UIImage *)image;
+//
+///// 对象方法，从图片data中获取二维码
+//- (NSArray *)getQRCodeFromImageData:(NSData *)imageData;
+
+/// 类方法，从图片中获取二维码
++ (NSArray *)getQRCodeFromImage:(UIImage *)image;
+
+/// 类方法，从图片data中获取二维码
++ (NSArray *)getQRCodeFromImageData:(NSData *)imageData;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

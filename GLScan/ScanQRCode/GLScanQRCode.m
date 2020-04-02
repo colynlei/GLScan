@@ -33,10 +33,6 @@
 @implementation GLScanQRCode
 
 
-- (instancetype)init {
-    return [self initWithScanShowView:nil];
-}
-
 #pragma mark - ------< 初始化 >------
 - (instancetype)initWithScanShowView:(UIView *)showView {
     self = [super init];
@@ -94,9 +90,11 @@
     // 添加元数据输出流到会话对象
     if ([self.session canAddOutput:metaDataOutput]) {
         [self.session addOutput:metaDataOutput];
-        // 获取扫码类型
-        metaDataOutput.metadataObjectTypes = [self getMetadataObjectTypes];
     }
+    
+    // 获取扫码类型
+//    [metaDataOutput availableMetadataObjectTypes];//检查类型是否有效
+    metaDataOutput.metadataObjectTypes = [self getMetadataObjectTypes];
     
     // 创建摄像设备输出流，用于识别光线强弱
     AVCaptureVideoDataOutput *videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
@@ -343,16 +341,18 @@
             }];
         }
     }
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.session startRunning];
     });
 }
 
 #pragma mark - ------< 关闭会话 >------
 - (void)stopRunning {
-    if (self.session.isRunning) {
-        [self.session stopRunning];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (self.session.isRunning) {
+            [self.session stopRunning];
+        }
+    });
 }
 
 #pragma mark - ------< 给预览父视图添加单击手势 >------
@@ -447,6 +447,36 @@
             }];
         }];
     }
+}
+
+#pragma mark - ------< 从图片中获取二维码 >------
+- (NSArray *)getQRCodeFromImage:(UIImage *)image {
+    return [self getQRCodeFromImageData:UIImagePNGRepresentation(image)];
+}
+
+- (NSArray *)getQRCodeFromImageData:(NSData *)imageData {
+    return [GLScanQRCode getQRCodeFromImageData:imageData];
+}
+
++ (NSArray *)getQRCodeFromImage:(UIImage *)image {
+    return [GLScanQRCode getQRCodeFromImageData:UIImagePNGRepresentation(image)];
+}
+
++ (NSArray *)getQRCodeFromImageData:(NSData *)imageData {
+    if (imageData == nil) {
+        return nil;
+    }
+    CIImage *originImage = [CIImage imageWithData:imageData];
+    CIContext *context = [CIContext contextWithOptions:@{kCIContextUseSoftwareRenderer:@(false),kCIContextPriorityRequestLow:@(false)}];
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
+    NSArray *features = [detector featuresInImage:originImage];
+    NSMutableArray *results = [NSMutableArray arrayWithCapacity:0];
+    for (CIQRCodeFeature *result in features) {
+        if (result.messageString.length) {
+            [results addObject:result.messageString];
+        }
+    }
+    return results.copy;
 }
 
 - (void)dealloc {
