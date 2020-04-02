@@ -4,7 +4,7 @@ inhibit_all_warnings!
 
 target "GLScan" do
 
-pod 'SVProgressHUD'
+pod 'MBProgressHUD'
 pod 'LookinServer', :configurations => ['Debug']
 
 # pod 'Reveal-SDK','24', :configurations => ['Debug']
